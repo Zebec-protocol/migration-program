@@ -1,0 +1,8 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./programs/migration-program/Cargo.toml",
+        "./programs/migration-program/Cargo.toml",
+        "./programs/migration-program/Cargo.toml",
+        "./programs/migration-program/Cargo.toml"
+    ]
+}
