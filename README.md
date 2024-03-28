@@ -26,5 +26,5 @@ The Zebec Protocol and its ZBC token are currently undergoing a transition to Th
 
 `anchor run test`
 
-<sub>Note: The migration program is one way : ZBC -> ZBCN. <br>
-The migration program will stop once 10,000,000,000 ZBCN tokens are minted.</sub>
+<sub>Note: The migration program is one way : 1 ZBC -> 10 ZBCN. <br>
+The migration program will stop once 100,000,000,000 ZBCN tokens are minted.</sub>
