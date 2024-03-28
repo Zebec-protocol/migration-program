@@ -62,6 +62,11 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
     let token_program = &ctx.accounts.token_program;
     let migrate_pda = &mut ctx.accounts.migrate_pda;
     let zbcn_decimals = zbcn_mint.decimals;
+    let zbc_decimals = zbc_mint.decimals;
+
+    // convert ZBC to ZBCN. 1 ZBC = 10 ZBCN
+    let transfer_amount =
+        (amount as f64 / 10f64.powf(zbc_decimals as f64 - zbcn_decimals as f64)) as u64 * 10;
 
     // Check if the ZBC mint account matches with the PDA's stored mint.
     require!(
@@ -81,9 +86,10 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
         MigrationError::ProgramPaused
     );
 
-    // The migration program is one way ZBC -> ZBCN. The migration program will stop once 10,000,000,000 ZBCN tokens are minted.
+    // The migration program is one way ZBC -> ZBCN. The migration program will stop once 100,000,000,000 ZBCN tokens are minted.
     require!(
-        migrate_pda.total_migrated + amount <= 10_000_000_000 * 10u64.pow(zbcn_decimals as u32),
+        migrate_pda.total_migrated + transfer_amount
+            <= 100_000_000_000 * 10u64.pow(zbcn_decimals as u32),
         MigrationError::MaxMigrationReached
     );
 
@@ -112,11 +118,11 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
         mint_authority_seed,
     );
     // Mint equivalent ZBCN tokens that were burned.
-    mint_to(mint_ctx, amount)?;
+    mint_to(mint_ctx, transfer_amount)?;
 
     // Update the migration PDA's transaction count and total migrated amount.
     migrate_pda.transaction_count += 1;
-    migrate_pda.total_migrated += amount;
+    migrate_pda.total_migrated += transfer_amount;
 
     Ok(())
 }
