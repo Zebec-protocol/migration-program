@@ -86,7 +86,7 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
         MigrationError::ProgramPaused
     );
 
-    // The migration program is one way ZBC -> ZBCN. The migration program will stop once 10,000,000,000 ZBCN tokens are minted.
+    // The migration program is one way ZBC -> ZBCN. The migration program will stop once 100,000,000,000 ZBCN tokens are minted.
     require!(
         migrate_pda.total_migrated + transfer_amount
             <= 100_000_000_000 * 10u64.pow(zbcn_decimals as u32),
