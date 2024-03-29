@@ -35,7 +35,10 @@ pub struct MigrateToken<'info> {
     #[account(mut)]
     /// ZBC (old) mint account.
     pub zbc_mint: Box<Account<'info, Mint>>,
-    #[account(mut)]
+    #[account(
+        mut,
+        mint::authority = mint_authority,
+    )]
     /// ZBCN (new) mint account.
     pub zbcn_mint: Account<'info, Mint>,
     #[account(
@@ -106,7 +109,7 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
     let (_, bump_seed) = Pubkey::find_program_address(&["zbcn_mint".as_bytes()], ctx.program_id);
     let mint_authority_seed: &[&[&[_]]] = &[&["zbcn_mint".as_bytes(), &[bump_seed]]];
 
-    let mint_zbc = MintTo {
+    let mint_zbcn = MintTo {
         mint: zbcn_mint.to_account_info(),
         to: sender_zbcn_ata.to_account_info(),
         authority: mint_authority.to_account_info(),
@@ -114,7 +117,7 @@ pub fn handler(ctx: Context<MigrateToken>, amount: u64) -> Result<()> {
 
     let mint_ctx = CpiContext::new_with_signer(
         token_program.to_account_info(),
-        mint_zbc,
+        mint_zbcn,
         mint_authority_seed,
     );
     // Mint equivalent ZBCN tokens that were burned.
