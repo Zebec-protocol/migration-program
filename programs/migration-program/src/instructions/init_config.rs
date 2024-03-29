@@ -10,7 +10,7 @@ pub struct InitConfig<'info> {
     #[account(
         init,   
         payer = admin,
-        space = 8 + std::mem::size_of::<Migrate>(),
+        space = 8 + Migrate::INIT_SPACE,
         seeds = [b"migrate"],
         bump
     )]
