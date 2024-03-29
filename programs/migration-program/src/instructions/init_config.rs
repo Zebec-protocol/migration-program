@@ -8,7 +8,7 @@ pub struct InitConfig<'info> {
     #[account(mut)]
     pub admin: Signer<'info>,
     #[account(
-        init_if_needed,   
+        init,   
         payer = admin,
         space = 8 + std::mem::size_of::<Migrate>(),
         seeds = [b"migrate"],
@@ -17,7 +17,7 @@ pub struct InitConfig<'info> {
     /// PDA that stores the migration state and authority.
     pub migrate_pda: Box<Account<'info, Migrate>>,
     #[account(
-        init_if_needed,   
+        init,   
         payer = admin,
         space = 8,
         seeds = [b"zbcn_mint"],
@@ -29,6 +29,7 @@ pub struct InitConfig<'info> {
     /// ZBC (new) mint account.
     pub zbc_mint: Account<'info, Mint>,
     /// ZBCN (old) mint account.
+    #[account(mint::authority = mint_authority)]
     pub zbcn_mint: Account<'info, Mint>,
     pub system_program: Program<'info,System>
 }
