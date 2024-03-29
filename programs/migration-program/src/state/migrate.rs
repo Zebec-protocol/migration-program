@@ -2,7 +2,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
-#[derive(Default, Debug)]
+#[derive(InitSpace)]
 pub struct Migrate {
     /// admin Pubkey
     pub admin: Pubkey,
