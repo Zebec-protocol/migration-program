@@ -1,6 +1,6 @@
 # ZEBEC NETWORK MIGRATION CONTRACT
 
-The Zebec Protocol and its ZBC token are currently undergoing a transition to The Zebec Network, accompanied by a corresponding change to the ZBCN token ticker. This adjustment aims to accurately reflect our evolving business model, expanded product portfolio, and the underlying infrastructure. The contract facilitates the migration of existing ZBC tokens to the new ZBCN tokens, which will have a maximum supply of 10 billion.
+The Zebec Protocol and its ZBC token are currently undergoing a transition to The Zebec Network, accompanied by a corresponding change to the ZBCN token ticker. This adjustment aims to accurately reflect our evolving business model, expanded product portfolio, and the underlying infrastructure. The contract facilitates the migration of existing ZBC tokens to the new ZBCN tokens, which will have a maximum supply of 100 billion.
 
 ## Functions
 
